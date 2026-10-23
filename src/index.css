@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * Pontos de quebra mobile-first: os mesmos limites do layout original.
+ * O estilo sem prefixo é o do celular; sm:, md:, lg: e xl: acrescentam acima.
+ * ------------------------------------------------------------------------- */
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 601px; /* acima do celular */
+  --breakpoint-md: 901px; /* menu completo no topo */
+  --breakpoint-lg: 1081px; /* painéis lado a lado */
+  --breakpoint-xl: 1181px; /* abertura com texto e painel lado a lado */
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --ease-brand: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-pulse-ring: pulse-ring 2.4s infinite;
+  --animate-float: float 4.5s ease-in-out infinite;
+  --animate-float-alt: float 5.4s ease-in-out infinite reverse;
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-spin-sweep: spin 6s linear infinite;
+  --animate-blink: blink 2.6s ease-in-out infinite;
+  --animate-breathe: breathe 2.8s ease-in-out infinite;
+  --animate-breathe-soft: breathe-soft 2.4s ease-in-out infinite;
+  --animate-pop: pop 2s ease-in-out infinite;
+  --animate-dash-flow: dash-flow 1.2s linear infinite;
+  --animate-march: march 1s linear infinite;
+  --animate-scan: scan 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  --animate-draw: draw 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  --animate-packet: packet 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  --animate-halo: halo 2.8s ease-in-out infinite;
+  --animate-twinkle: twinkle 3.4s ease-in-out infinite;
+  --animate-drift: drift 10s ease-in-out infinite;
+  --animate-dot-pulse: dot-pulse 2.4s ease-in-out infinite;
+  --animate-shine: shine 5s ease-in-out infinite;
+  --animate-travel: travel 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  --animate-lift-24: lift-24 3s ease-in-out infinite;
+  --animate-lift-26: lift-26 2.6s ease-in-out infinite;
+}
+
+/* Cores ligadas às variáveis: o tema escuro troca as variáveis e tudo acompanha. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-ink: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  --shadow-soft: var(--shadow);
+  --shadow-lift: var(--shadow-lg);
+}
+
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-subtle: #71717a;
+
+  --accent: #6d28d9;
+  --accent-hover: #5b21b6;
+  --accent-soft: #ede9fe;
+  --accent-contrast: #ffffff;
+
+  --success: #16a34a;
+  --danger: #dc2626;
+
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.04), 0 24px 48px rgb(0 0 0 / 0.1);
+
+  --container: 1240px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --header-height: 68px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0b0f;
+    --surface: #131318;
+    --surface-2: #1b1b22;
+    --border: #27272f;
+    --border-strong: #3f3f48;
+    --text: #f4f4f5;
+    --text-muted: #a1a1aa;
+    --text-subtle: #8b8b95;
+
+    --accent: #a78bfa;
+    --accent-hover: #c4b5fd;
+    --accent-soft: rgb(167 139 250 / 0.14);
+    --accent-contrast: #18181b;
+
+    --success: #4ade80;
+    --danger: #f87171;
+
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px rgb(0 0 0 / 0.45);
+
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+}
+
+/* Container da página: largura máxima e respiro lateral fluido. */
+@utility container-page {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Área de toque de 44px em telas de toque, sem mudar o visual do link. */
+@utility touch-target {
+  position: relative;
+
+  @media (pointer: coarse) {
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -11px -8px;
+    }
+  }
+}
+
+/* Ilustrações fora da tela não animam: economiza CPU e bateria no celular. */
+[data-offscreen="true"],
+[data-offscreen="true"] *,
+[data-offscreen="true"] *::before,
+[data-offscreen="true"] *::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Animações
+ * ------------------------------------------------------------------------- */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 50%, transparent); }
+  70% { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* Brilho do botão no painel da abertura. */
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 10px 30px var(--sx-glow), inset 0 1px 0 rgb(255 255 255 / 0.35); }
+  50% { box-shadow: 0 14px 44px var(--sx-glow-strong), inset 0 1px 0 rgb(255 255 255 / 0.35); }
+}
+
+@keyframes breathe-soft {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+@keyframes pop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -28; }
+}
+
+@keyframes march {
+  to { background-position: 16px 0; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(320px); opacity: 0; }
+}
+
+@keyframes draw {
+  0% { stroke-dashoffset: 520; }
+  60%, 100% { stroke-dashoffset: 0; }
+}
+
+@keyframes packet {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes halo {
+  0%, 100% { box-shadow: 0 0 0 6px var(--ai-soft), 0 0 22px var(--ai-glow); }
+  50% { box-shadow: 0 0 0 10px var(--ai-soft), 0 0 34px var(--ai-glow-strong); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes drift {
+  0%, 100% { transform: rotateY(-6deg) rotateX(4deg); }
+  50% { transform: rotateY(6deg) rotateX(-3deg); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  50% { box-shadow: 0 0 10px 2px currentColor; opacity: 0.75; }
+}
+
+@keyframes shine {
+  0%, 60% { left: -60%; }
+  85%, 100% { left: 130%; }
+}
+
+@keyframes travel {
+  0% { left: 14px; }
+  100% { left: calc(100% - 24px); }
+}
+
+@keyframes lift-24 {
+  0%, 100% { transform: translateZ(24px); }
+  50% { transform: translateZ(36px); }
+}
+
+@keyframes lift-26 {
+  0%, 100% { transform: translateZ(26px); }
+  50% { transform: translateZ(34px); }
+}
